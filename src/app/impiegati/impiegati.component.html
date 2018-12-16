@@ -1,0 +1,28 @@
+<button align="center" (click)="showTable()">Table On/Off</button>
+
+<div class="table-responsive table-container" *ngIf="visible">  
+  <table class="table">  
+    <thead>  
+      <tr>  
+        <th>Id</th>  
+        <th>Nome</th>  
+        <th>Cognome</th>  
+        <th>Data di Nascita</th>
+        <th>Id Dipartimento</th>
+        <th>Data Assunzione</th>
+      </tr>  
+    </thead>  
+    <tbody>  
+      <tr *ngFor="let imp of impiegati">  
+        <td>{{imp.id}}</td> 
+        <td>{{imp.nome}}</td>  
+        <td>{{imp.cognome}}</td> 
+        <td>{{imp.dataNascita | date : "dd/MM/y"}}</td> 
+        <td>{{imp?.idDipartimento}}</td>
+        <td>{{imp.dataAssunzione | date : "dd/MM/y"}}</td>
+      </tr>  
+    </tbody>  
+  </table>  
+</div>
+
+<button align="center" (click)="showForm()">Show Form</button>

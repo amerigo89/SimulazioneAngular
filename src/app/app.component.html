@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1>
@@ -5,17 +7,85 @@
   </h1>
   <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
 <router-outlet></router-outlet>
+
+<div align="center">
+  <button (click)="showTable()" class="btn btn-primary">Table On/Off</button>
+</div>
+
+<br>
+
+<div class="table-responsive table-container" *ngIf="visible" align="center">  
+  <table class="table">  
+    <thead>  
+      <tr>  
+        <th>Id</th>  
+        <th>Nome</th>  
+        <th>Cognome</th>  
+        <th>Data di Nascita</th>
+        <th>Id Dipartimento</th>
+        <th>Nome Dipartimento</th>
+        <th>Data Assunzione</th>
+      </tr>  
+    </thead>  
+    <tbody>  
+      <tr *ngFor="let imp of impiegati">  
+        <td>{{imp.id}}</td> 
+        <td>{{imp.nome}}</td>  
+        <td>{{imp.cognome}}</td> 
+        <td>{{imp.dataNascita | date : "dd/MM/y"}}</td> 
+        <td>{{imp?.idDipartimento}}</td>
+        <td>{{imp?.nomeDipartimento}}</td>
+        <td>{{imp.dataAssunzione | date : "dd/MM/y"}}</td>
+      </tr>  
+    </tbody>  
+  </table>  
+</div>
+
+<br>
+
+<form class="form-inline">
+  <div align="center">
+    <label>Dipartimento:</label>
+    <select #dipartimento (change)="filter($event.target.value)" class="form-control">
+      <option [value]="null">Seleziona Dipartimento</option>
+      <option *ngFor="let dip of dipartimenti" [value]="dip.id">{{ dip.nome }}</option>
+    </select>
+  </div>
+  
+  <br>
+  
+  <div align="center">
+    <label>Impiegati da mostrare:</label>  
+    <input #numero type="number" placeholder="Inserisci un numero" (change)="setQuantity($event.target.value)" class="form-control">
+  </div>
+  
+  <button (click)="test(dipartimento.value, numero.value)">CLICK</button>
+</form>
+
+
+<table class="table" *ngIf="quantity>0" align="center">  
+    <thead>  
+      <tr>
+        <th>Id</th>  
+        <th>Nome</th>  
+        <th>Cognome</th>  
+        <th>Data di Nascita</th>
+        <th>Id Dipartimento</th>
+        <th>Nome Dipartimento</th>
+        <th>Data Assunzione</th>
+      </tr>  
+    </thead>  
+    <tbody *ngFor="let imp of impiegatiAnziani | slice:0:quantity">  
+      <tr>  
+        <td>{{imp.id}}</td> 
+        <td>{{imp.nome}}</td>  
+        <td>{{imp.cognome}}</td> 
+        <td>{{imp.dataNascita | date : "dd/MM/y"}}</td> 
+        <td>{{imp?.idDipartimento}}</td>
+        <td>{{imp?.nomeDipartimento}}</td>
+        <td>{{imp.dataAssunzione | date : "dd/MM/y"}}</td>
+      </tr>  
+    </tbody>  
+  </table>
