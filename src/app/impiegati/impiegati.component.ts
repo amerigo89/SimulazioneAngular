@@ -29,7 +29,4 @@ export class ImpiegatiComponent implements OnInit {
     }
   }
 
-  
-
-
 }
